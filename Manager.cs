@@ -13,8 +13,8 @@ public class Manager : MonoBehaviour
       Debug.Log(node.description);
       Debug.Log(node.type);
       Debug.Log(node.image);
-      foreach (string fieldName in fields.KeySet) {
-        Debug.Log(fieldName + ": " + fields[fieldName]);
+      foreach (string fieldName in node.fields.Keys) {
+        Debug.Log(fieldName + ": " + node.fields[fieldName]);
       }
       string outp = "Outputs: ";
       foreach (Node output in node.outputs) {

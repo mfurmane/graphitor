@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Creator : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class Creator : MonoBehaviour
     GameObject imageChooseField;
     List<GameObject> parameterFields = new List<GameObject>();
 
-    public Node prepareFields() {
+    public Node prepareFields(NodeType type) {
       Node node = Instantiate(nodePrefab, nodeParent);
       node.id = Node.counter;
       Node.counter++;
@@ -25,21 +26,27 @@ public class Creator : MonoBehaviour
       descriptionField = Instantiate(parameterFieldPrefab, transform.parent);
       nodeTypeField = Instantiate(nodeTypeFieldPrefab, transform.parent);
       imageChooseField = Instantiate(imageChooseFieldPrefab, transform.parent);
-      prepareParamFields(NodeType.default);
-      foreach ()
-      foreach (string fieldName in fields.KeySet) {
-        Debug.Log(fieldName + ": " + fields[fieldName]);
+      prepareParamFields(type);
+      foreach (string fieldName in node.fields.Keys) {
+        Debug.Log(fieldName + ": " + node.fields[fieldName]);
       }
       string outp = "Outputs: ";
       foreach (Node output in node.outputs) {
         outp += (output.id + ", ");
       }
       Debug.Log(outp);
+      return node;
     }
 
-    prepareParamFields(NodeType type) {
+    public void prepareParamFields(NodeType type) {
+      if (type == null) {
+        type = NodeType.deffault;
+      }
       foreach (string param in type.fieldNames) {
         GameObject field = Instantiate(parameterFieldPrefab, transform.parent);
+        field.name = param;
+        field.transform.Find("label").GetComponent<TextMeshProUGUI>().text = param;
+        field.transform.Find("value").GetComponent<TMP_InputField>().text = param;
         parameterFields.Add(field);
       }
     }
