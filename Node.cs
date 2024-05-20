@@ -12,6 +12,7 @@ public class Node : MonoBehaviour
     public NodeType type;
     public Sprite image;
     public List<Node> outputs = new List<Node>();
+    public List<long> readOutputs = new List<long>();
     public Dictionary<string, string> fields = new Dictionary<string, string>();
 
     // Start is called before the first frame update

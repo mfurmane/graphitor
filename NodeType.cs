@@ -8,6 +8,7 @@ public class NodeType : MonoBehaviour
 
     public string name = "";
     public string identifier = "";
+    public List<string> readOutputTypes = new List<string>();
     public List<NodeType> outputTypes = new List<NodeType>();
     public List<string> fieldNames = new List<string>();
 

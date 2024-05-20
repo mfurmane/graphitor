@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PersistentNodeType {
+public class PersistentNodeType : PersistentThing {
     public string name = "";
     public string identifier = "";
-    public List<PersistentNodeType> outputTypes = new List<PersistentNodeType>();
+    public List<string> outputTypes = new List<string>();
     public List<string> fieldNames = new List<string>();
 }
