@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class Persistor : MonoBehaviour
 {
@@ -80,6 +82,7 @@ public class Persistor : MonoBehaviour
     public PersistentSettings runToPersistentSettings() {
       PersistentSettings perv = new PersistentSettings();
       perv.counter = Node.counter;
+      return perv;
     }
 
     public void persistentToRunSettings(PersistentSettings settings) {
@@ -116,9 +119,9 @@ public class Persistor : MonoBehaviour
       if(File.Exists(destination)) file = File.OpenWrite(destination);
       else file = File.Create(destination);
 
-      GameData data = new GameData(currentScore, currentName, currentTimePlayed);
+      PersistentGraph graph = new PersistentGraph();
       BinaryFormatter bf = new BinaryFormatter();
-      bf.Serialize(file, data);
+      bf.Serialize(file, graph);
       file.Close();
     }
 

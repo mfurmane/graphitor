@@ -31,15 +31,15 @@ public class Creator : MonoBehaviour
       nodeTypeField = Instantiate(nodeTypeFieldPrefab, transform.parent);
       imageChooseField = Instantiate(imageChooseFieldPrefab, transform.parent);
       prepareParamFields(type);
-      foreach (string fieldName in node.fields.Keys) {
-        Debug.Log(fieldName + ": " + node.fields[fieldName]);
+      foreach (string fieldName in currentNode.fields.Keys) {
+        Debug.Log(fieldName + ": " + currentNode.fields[fieldName]);
       }
       string outp = "Outputs: ";
-      foreach (Node output in node.outputs) {
+      foreach (Node output in currentNode.outputs) {
         outp += (output.id + ", ");
       }
       Debug.Log(outp);
-      return node;
+      return currentNode;
     }
 
     public void prepareParamFields(NodeType type) {
@@ -52,16 +52,17 @@ public class Creator : MonoBehaviour
       foreach (string param in type.fieldNames) {
         GameObject field = Instantiate(parameterFieldPrefab, paramsParent);
         field.name = param;
-        field.transform.Find("label").GetComponent<TextMeshProUGUI>().text = param;
-        field.transform.Find("value").GetComponent<TMP_InputField>().text = param;
+        field.transform.transform.Find("label").GetComponent<TextMeshProUGUI>().text = param;
+        field.transform.transform.Find("value").GetComponent<TMP_InputField>().text = param;
         parameterFields.Add(field);
       }
     }
 
-    public void getEmptyNode() {
+    public Node getEmptyNode() {
       Node node = Instantiate(nodePrefab, nodeParent);
       node.id = Node.counter;
       Node.counter++;
+      return node;
     }
 
     public void confirm() {
@@ -69,13 +70,13 @@ public class Creator : MonoBehaviour
         currentNode = getEmptyNode();
       }
       editWindow.SetActive(false);
-      currentNode.name = nameField.Find("value").GetComponent<TMP_InputField>().text;
-      currentNode.gameObject.name = node.name;
-      currentNode.description = descriptionField.Find("value").GetComponent<TMP_InputField>().text;
+      currentNode.name = nameField.transform.Find("value").GetComponent<TMP_InputField>().text;
+      currentNode.gameObject.name = currentNode.name;
+      currentNode.description = descriptionField.transform.Find("value").GetComponent<TMP_InputField>().text;
       currentNode.type = nodeType();
       currentNode.image = imageChooseField.GetComponent<Image>().sprite;
       foreach (Transform field in paramsParent) {
-        currentNode.fields.Add(field.transform.Find("label").GetComponent<TextMeshProUGUI>().text, field.transform.Find("value").GetComponent<TMP_InputField>().text);
+        currentNode.fields.Add(field.transform.transform.Find("label").GetComponent<TextMeshProUGUI>().text, field.transform.transform.Find("value").GetComponent<TMP_InputField>().text);
       }
       currentNode = null;
     }
@@ -88,22 +89,23 @@ public class Creator : MonoBehaviour
     }
 
     public void fillNode(Node node) {
-      nameField.Find("value").GetComponent<TMP_InputField>().text = node.name;
-      descriptionField.Find("value").GetComponent<TMP_InputField>().text = node.description;
+      nameField.transform.Find("value").GetComponent<TMP_InputField>().text = node.name;
+      descriptionField.transform.Find("value").GetComponent<TMP_InputField>().text = node.description;
       setNodeType(node.type);
       imageChooseField.GetComponent<Image>().sprite = node.image;
       foreach (string key in node.fields.Keys) {
-        Transform field = paramsParent.Find(key);
-        field.transform.Find("value").GetComponent<TMP_InputField>().text = node.fields[key];
+        Transform field = paramsParent.transform.Find(key);
+        field.transform.transform.Find("value").GetComponent<TMP_InputField>().text = node.fields[key];
       }
     }
 
     public NodeType nodeType() {
-      nodeTypeField;
+      //nodeTypeField;
+      return null;
     }
 
     public void setNodeType(NodeType type) {
-      nodeTypeField;
+      //nodeTypeField;
     }
 
     // Start is called before the first frame update
