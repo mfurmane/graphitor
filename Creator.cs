@@ -6,6 +6,9 @@ using TMPro;
 
 public class Creator : MonoBehaviour
 {
+
+    public List<string> types = new List<string>();
+
     public Transform nodeParent;
     public Transform paramsParent;
     public GameObject editWindow;
@@ -24,6 +27,13 @@ public class Creator : MonoBehaviour
     GameObject nodeTypeField;
     GameObject imageChooseField;
     List<GameObject> parameterFields = new List<GameObject>();
+
+    public void refreshTypes() {
+      TMP_Dropdown dropdown = nodeTypeFieldPrefab.transform.Find("value").GetComponent<TMP_InputField>();
+      dropdown.ClearOptions();
+      dropdown.AddOptions(types);
+      dropdown.RefreshShownValue();
+    }
 
     public Node prepareFields(NodeType type) {
       nameField = Instantiate(parameterFieldPrefab, transform.parent);
